@@ -11,7 +11,7 @@ const categoryList = inject("categoryList") as CategoryItem[];
 
 .categories-button {
   margin-top: 0.25em;
-  background-color: var(--primary-color-dark);
+  background-color: var(--primary-color);
 }
 
 .header-dropdown ul {
@@ -30,7 +30,7 @@ const categoryList = inject("categoryList") as CategoryItem[];
 }
 
 .header-dropdown li:hover {
-  background: lightgray;
+  background: var(--primary-color-dark);
 }
 
 .header-dropdown:hover ul {
@@ -44,7 +44,9 @@ const categoryList = inject("categoryList") as CategoryItem[];
 
 <template>
   <div class="header-dropdown">
-    <button class="button categories-button">Categories</button>
+    <button class="button categories-button">
+      <i class="fas fa-bars"></i> &nbsp; Categories
+    </button>
     <ul>
       <li v-for="category in categoryList" :key="category.categoryId">
         <router-link :to="'/category/' + category.name">
