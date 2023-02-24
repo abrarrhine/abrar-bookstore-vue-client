@@ -2,23 +2,27 @@
   "categories": [
     {
       "categoryId": 1001,
-      "name": "Classics"
+      "name": "Science"
     },
     {
       "categoryId": 1002,
-      "name": "Fantasy"
+      "name": "Engineering"
     },
     {
       "categoryId": 1003,
-      "name": "Mystery"
+      "name": "Myth"
     },
     {
       "categoryId": 1004,
-      "name": "Romance"
+      "name": "Religion"
     },
     {
       "categoryId": 1005,
-      "name": "Science Fiction"
+      "name": "Sports"
+    }, 
+    {
+      "categoryId": 1006,
+      "name": "Travel"
     }
   ],
   "books": [
@@ -28,7 +32,7 @@
       "author": "Homer",
       "price": 699,
       "isPublic": true,
-      "categoryId": 1001
+      "categoryId": 1003
     },
     {
       "bookId": 1002,
@@ -36,7 +40,7 @@
       "author": "Fyodor Dostoyevski",
       "price": 799,
       "isPublic": true,
-      "categoryId": 1001
+      "categoryId": 1003
     },
     {
       "bookId": 1003,
@@ -44,7 +48,7 @@
       "author": "Charles Dickens",
       "price": 599,
       "isPublic": true,
-      "categoryId": 1001
+      "categoryId": 1003
     },
     {
       "bookId": 1004,
@@ -52,7 +56,7 @@
       "author": "Herman Melville",
       "price": 699,
       "isPublic": true,
-      "categoryId": 1001
+      "categoryId": 1003
     },
     {
       "bookId": 1005,
@@ -60,7 +64,47 @@
       "author": "William Shakespeare",
       "price": 899,
       "isPublic": true,
-      "categoryId": 1001
+      "categoryId": 1006
+    }, 
+    {
+      "bookId": 1006,
+      "title": "Combinatorics Ancient Modern",
+      "author": "Robin Wilson",
+      "price": 2999,
+      "isPublic": true,
+      "categoryId": 1002
+    }, 
+    {
+      "bookId": 1007,
+      "title": "Java A Beginners Guide",
+      "author": "Herbert Schildt",
+      "price": 9999,
+      "isPublic": true,
+      "categoryId": 1002
+    }, 
+    {
+      "bookId": 1008,
+      "title": "Automotive Mechanics",
+      "author": "May & Simpson",
+      "price": 7449,
+      "isPublic": true,
+      "categoryId": 1002
+    }, 
+    {
+      "bookId": 1009,
+      "title": "The Aircraft Book",
+      "author": "Jeff Walker",
+      "price": 17999,
+      "isPublic": true,
+      "categoryId": 1002
+    }, 
+    {
+      "bookId": 1010,
+      "title": "Engineering Electromagnetics",
+      "author": "Nathan Ida",
+      "price": 3595,
+      "isPublic": true,
+      "categoryId": 1002
     }
   ]
 }
