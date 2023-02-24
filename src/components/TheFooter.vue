@@ -46,7 +46,12 @@ footer a {
     <section class="copyright">
       <i class="far fa-copyright"></i>
       <span>2023</span>
-      <img src="/site-images/bookstore-logo.png" alt="Rhine Books Logo" width="57px" height="auto" />
+      <img
+        src="/site-images/bookstore-logo.png"
+        alt="Rhine Books Logo"
+        width="57px"
+        height="auto"
+      />
     </section>
     <section class="links">
       <router-link to="/">about</router-link>

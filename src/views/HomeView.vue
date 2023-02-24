@@ -1,7 +1,3 @@
-<script setup lang="ts">
-import TheHomeCategoryList from "@/components/TheHomeCategoryList.vue";
-</script>
-
 <style scoped>
 .home-page {
   height: 620px;

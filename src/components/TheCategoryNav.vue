@@ -39,7 +39,10 @@ const categoryList = inject("categoryList") as CategoryItem[];
   <nav class="category-nav">
     <ul class="category-buttons">
       <li v-for="category in categoryList" :key="category.categoryId">
-        <router-link :to="'/category/' + category.name" class="button category-button">
+        <router-link
+          :to="'/category/' + category.name"
+          class="button category-button"
+        >
           {{ category.name }}
         </router-link>
       </li>

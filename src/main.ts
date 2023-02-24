@@ -5,11 +5,14 @@ import App from "./App.vue";
 import router from "./router";
 
 import "./assets/global.css";
-import { library } from '@fortawesome/fontawesome-svg-core'
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import { library } from "@fortawesome/fontawesome-svg-core";
 
-import { faHatWizard } from '@fortawesome/free-solid-svg-icons'
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import { faHatWizard } from "@fortawesome/free-solid-svg-icons";
 
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 
 const app = createApp(App);
 

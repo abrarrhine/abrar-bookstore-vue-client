@@ -84,7 +84,12 @@ header a {
   <header class="container header-with-shadow">
     <section class="bookstore-logo-title flex-centered-container">
       <a href="index.html">
-        <img src="/site-images/bookstore-logo.png" alt="Rhine Books Logo" width="57px" height="auto" />
+        <img
+          src="/site-images/bookstore-logo.png"
+          alt="Rhine Books Logo"
+          width="57px"
+          height="auto"
+        />
       </a>
       <span class="logo-title-divider"></span>
       <a href="index.html">
@@ -93,7 +98,11 @@ header a {
     </section>
     <section class="search-bar flex-centered-container">
       <form action="category.html" class="flex-centered-container">
-        <input type="text" class="search-bar-text" placeholder="Search books..." /><br />
+        <input
+          type="text"
+          class="search-bar-text"
+          placeholder="Search books..."
+        /><br />
         <input
           type="submit"
           class="button icon-inside-button search-bar-button"

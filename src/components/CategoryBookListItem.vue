@@ -97,12 +97,17 @@ const bookImageFileName = function (book: BookItem): string {
 <template>
   <li class="book-box">
     <div class="book-image">
-      <img :src="'/book-images/' + bookImageFileName(props.book)" :alt="book.title" />
+      <img
+        :src="'/book-images/' + bookImageFileName(props.book)"
+        :alt="book.title"
+      />
     </div>
     <div class="book-title">{{ book.title }}</div>
     <div class="book-author">{{ book.author }}</div>
     <div class="book-price">${{ (book.price / 100).toFixed(2) }}</div>
     <button class="button add-to-cart-button">Add to Cart</button>
-    <button class="button read-now-button"><i class="fab fa-readme"></i></button>
+    <button class="button read-now-button">
+      <i class="fab fa-readme"></i>
+    </button>
   </li>
 </template>
