@@ -5,6 +5,7 @@ import type { CategoryItem } from "@/types";
 import TheHeader from "@/components/TheHeader.vue";
 import TheFooter from "@/components/TheFooter.vue";
 import sourceData from "@/db.json";
+
 const route = useRoute();
 const categoryList = sourceData.categories as CategoryItem[];
 provide("categoryList", categoryList);

@@ -98,7 +98,7 @@ const bookImageFileName = function (book: BookItem): string {
   <li class="book-box">
     <div class="book-image">
       <img
-        :src="'/book-images/' + bookImageFileName(props.book)"
+        :src="'../src/assets/book-images/' + bookImageFileName(props.book)"
         :alt="book.title"
       />
     </div>
