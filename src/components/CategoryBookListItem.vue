@@ -5,12 +5,17 @@ import type { BookItem } from "@/types";
 const props = defineProps<{
   book: BookItem;
 }>();
+
 const bookImageFileName = function (book: BookItem): string {
   let name = book.title.toLowerCase();
   name = name.replace(/ /g, "-");
   name = name.replace(/'/g, "");
   return `${name}.gif`;
 };
+
+function getImageUrl(imgFileName: string) {
+  return new URL(`../assets/book-images/${imgFileName}`, import.meta.url).href;
+}
 </script>
 <style scoped>
 .book-box {
@@ -98,7 +103,7 @@ const bookImageFileName = function (book: BookItem): string {
   <li class="book-box">
     <div class="book-image">
       <img
-        :src="'../src/assets/book-images/' + bookImageFileName(props.book)"
+        :src="getImageUrl(bookImageFileName(props.book))"
         :alt="book.title"
       />
     </div>
