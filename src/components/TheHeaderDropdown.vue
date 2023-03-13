@@ -1,7 +1,15 @@
 <script setup lang="ts">
-import { inject } from "vue";
 import type { CategoryItem } from "@/types";
-const categoryList = inject("categoryList") as CategoryItem[];
+
+const apiUrl =
+  `${location.protocol}//${location.hostname}:` +
+  `${location.port === "5173" ? "8080" : location.port}` +
+  `${import.meta.env.BASE_URL}/api`;
+
+let response = await fetch(`${apiUrl}/categories/`);
+let data = await response.json();
+let categoryList = data as CategoryItem[];
+console.log(data);
 </script>
 
 <style scoped>

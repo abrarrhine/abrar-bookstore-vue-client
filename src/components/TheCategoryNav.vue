@@ -1,7 +1,10 @@
 <script setup lang="ts">
-import { inject } from "vue";
 import type { CategoryItem } from "@/types";
-const categoryList = inject("categoryList") as CategoryItem[];
+
+let response = await fetch("http://localhost:8080/AbrarBookstoreFetch/api/categories/");
+let data = await response.json();
+let categoryList = data as CategoryItem[];
+console.log(data);
 </script>
 
 <style scoped>
@@ -31,7 +34,8 @@ const categoryList = inject("categoryList") as CategoryItem[];
 
 .button.category-button:hover,
 .button.category-button:active {
-  background-color: rgb(60 121 123 / 7%);
+  background-color: rgb(12, 110, 239);
+  color: white;
 }
 </style>
 
@@ -39,10 +43,7 @@ const categoryList = inject("categoryList") as CategoryItem[];
   <nav class="category-nav">
     <ul class="category-buttons">
       <li v-for="category in categoryList" :key="category.categoryId">
-        <router-link
-          :to="'/category/' + category.name"
-          class="button category-button"
-        >
+        <router-link :to="'/category/' + category.name" class="button category-button">
           {{ category.name }}
         </router-link>
       </li>

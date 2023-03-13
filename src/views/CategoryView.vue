@@ -1,11 +1,20 @@
 <script setup lang="ts">
-import { provide } from "vue";
-import sourceData from "@/db.json";
+// import sourceData from "@/db.json";
 import type { BookItem } from "@/types";
 import TheCategoryNav from "@/components/TheCategoryNav.vue";
 import TheCategoryBookList from "@/components/TheCategoryBookList.vue";
-const bookList = sourceData.books as BookItem[];
-provide("bookList", bookList);
+import { useRoute } from "vue-router";
+const route = useRoute();
+
+const apiUrl =
+  `${location.protocol}//${location.hostname}:` +
+  `${location.port === "5173" ? "8080" : location.port}` +
+  `${import.meta.env.BASE_URL}/api`;
+
+let response = await fetch(`${apiUrl}/categories/name/${route.params.name}/books`);
+let data = await response.json();
+let bookList = data as BookItem[];
+console.log(data);
 </script>
 
 <style scoped></style>
