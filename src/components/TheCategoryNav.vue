@@ -1,7 +1,14 @@
 <script setup lang="ts">
 import type { CategoryItem } from "@/types";
 
-let response = await fetch("http://localhost:8080/AbrarBookstoreFetch/api/categories/");
+const apiUrl =
+  `${location.protocol}//${location.hostname}:` +
+  `${location.port === "5173" ? "8080" : location.port}` +
+  `${import.meta.env.BASE_URL}/api`;
+
+let response = await fetch(`${apiUrl}/categories/`);
+
+// let response = await fetch("http://localhost:8080/AbrarBookstoreFetch/api/categories/");
 let data = await response.json();
 let categoryList = data as CategoryItem[];
 console.log(data);
