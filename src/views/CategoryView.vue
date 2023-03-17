@@ -1,20 +1,19 @@
 <script setup lang="ts">
-// import sourceData from "@/db.json";
-import type { BookItem } from "@/types";
 import TheCategoryNav from "@/components/TheCategoryNav.vue";
 import TheCategoryBookList from "@/components/TheCategoryBookList.vue";
 import { useRoute } from "vue-router";
+import { useBookStore } from "@/stores/book";
+import { watch } from "vue";
 const route = useRoute();
+const bookStore = useBookStore();
 
-const apiUrl =
-  `${location.protocol}//${location.hostname}:` +
-  `${location.port === "5173" ? "8080" : location.port}` +
-  `${import.meta.env.BASE_URL}/api`;
-
-let response = await fetch(`${apiUrl}/categories/name/${route.params.name}/books`);
-let data = await response.json();
-let bookList = data as BookItem[];
-console.log(data);
+watch(
+  () => route.params.name,
+  (newName) => {
+    bookStore.fetchBooks(newName as string);
+  },
+  { immediate: true }
+);
 </script>
 
 <style scoped></style>
@@ -22,6 +21,6 @@ console.log(data);
 <template>
   <div>
     <the-category-nav></the-category-nav>
-    <the-category-book-list :bookList="bookList"> </the-category-book-list>
+    <the-category-book-list></the-category-book-list>
   </div>
 </template>

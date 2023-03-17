@@ -1,15 +1,6 @@
 <script setup lang="ts">
-import type { CategoryItem } from "@/types";
-
-const apiUrl =
-  `${location.protocol}//${location.hostname}:` +
-  `${location.port === "5173" ? "8080" : location.port}` +
-  `${import.meta.env.BASE_URL}/api`;
-
-let response = await fetch(`${apiUrl}/categories/`);
-let data = await response.json();
-let categoryList = data as CategoryItem[];
-console.log(data);
+import { useCategoryStore } from "@/stores/category";
+const categoryStore = useCategoryStore();
 </script>
 
 <style scoped>
@@ -56,7 +47,10 @@ console.log(data);
       <i class="fas fa-bars"></i> &nbsp; Categories
     </button>
     <ul>
-      <li v-for="category in categoryList" :key="category.categoryId">
+      <li
+        v-for="category in categoryStore.categoryList"
+        :key="category.categoryId"
+      >
         <router-link :to="'/category/' + category.name">
           {{ category.name }}
         </router-link>
