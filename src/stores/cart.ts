@@ -22,6 +22,12 @@ export const useCartStore = defineStore("CartStore", {
       console.log(this.cart.numberOfItems);
       return this.cart.numberOfItems;
     },
+    subtotalPrice(): number {
+      return this.cart.subtotal;
+    },
+    totalPrice(): number {
+      return this.cart.total;
+    },
   },
 
   actions: {

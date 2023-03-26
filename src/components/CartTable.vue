@@ -1,14 +1,18 @@
 <script setup lang="ts">
-import { useCartStore } from "@/stores/CartStore";
+import { useCartStore } from "@/stores/cart";
 import type { BookItem } from "@/types";
+import { asDollarsAndCents } from "@/main";
 const cartStore = useCartStore();
 
 const bookImageFileName = function (book: BookItem): string {
   let name = book.title.toLowerCase();
   name = name.replace(/ /g, "-");
   name = name.replace(/'/g, "");
-  return `${name}.jpeg`;
+  return `${name}.gif`;
 };
+function getImageUrl(imgFileName: string) {
+  return new URL(`../assets/book-images/${imgFileName}`, import.meta.url).href;
+}
 const updateCart = function (book: BookItem, quantity: number) {
   cartStore.cart.update(book, quantity);
 };
@@ -67,8 +71,8 @@ ul > li {
 
 img {
   display: block;
-  width: 100px;
-  height: auto;
+  width: 100% !important;
+  height: auto !important;
 }
 
 .square {
@@ -156,10 +160,10 @@ select {
   border-radius: 3px;
 }
 .cart-book-image {
-  height: 50px;
-  width: 50px;
+  height: auto;
+  width: 100px;
   border: solid black 3px;
-  background-color: darkmagenta;
+  background-color: rgb(0, 0, 0);
 }
 </style>
 
@@ -176,11 +180,13 @@ select {
         <li>
           <div class="cart-book-image">
             <!-- TODO Put a small book image in here and other first columns -->
+            <img
+              :src="getImageUrl(bookImageFileName(item.book))"
+              :alt="item.book.title"
+            />
           </div>
           <div class="cart-book-title">{{ item.book.title }}</div>
-          <div class="cart-book-price">
-            ${{ (item.book.price / 100).toFixed(2) }}
-          </div>
+          <div class="cart-book-price">${{ (item.book.price / 100).toFixed(2) }}</div>
           <div class="cart-book-quantity">
             <span class="quantity">{{ item.quantity }}</span
             >&nbsp;
@@ -197,89 +203,10 @@ select {
               <i class="fas fa-minus-circle"></i>
             </button>
           </div>
-          <div class="cart-book-subtotal">$3.98</div>
+          <div class="cart-book-subtotal">{{ asDollarsAndCents(item.quantity * item.book.price) }}</div>
         </li>
         <li class="line-sep"></li>
       </template>
-
-      <li>
-        <div class="cart-book-image"></div>
-        <div class="cart-book-title">Book Title</div>
-        <div class="cart-book-price">$2.99</div>
-        <div class="cart-book-quantity">
-          <span class="quantity">2</span>&nbsp;
-          <button
-            class="icon-button inc-button"
-            @click="updateCart(item.book, item.quantity + 1)"
-          >
-            <i class="fas fa-plus-circle"></i>
-          </button>
-          <button
-            class="icon-button dec-button"
-            @click="updateCart(item.book, item.quantity - 1)"
-          >
-            <i class="fas fa-minus-circle"></i>
-          </button>
-        </div>
-        <div class="cart-book-subtotal">$3.98</div>
-      </li>
-      <li class="line-sep"></li>
-      <li>
-        <div class="cart-book-image"></div>
-        <div class="cart-book-title">Book Title</div>
-        <div class="cart-book-price">$2.99</div>
-        <div class="cart-book-quantity">
-          <button
-            class="icon-button dec-arrow-button"
-            @click="updateCart(item.book, item.quantity - 1)"
-          >
-            <i class="fas fa-chevron-left"></i>
-          </button>
-          <span class="quantity">&nbsp;&nbsp;2&nbsp;&nbsp;</span>
-          <button
-            class="icon-button inc-arrow-button"
-            @click="updateCart(item.book, item.quantity + 1)"
-          >
-            <i class="fas fa-chevron-right"></i>
-          </button>
-        </div>
-        <div class="cart-book-subtotal">$3.98</div>
-      </li>
-      <li class="line-sep"></li>
-      <li>
-        <div class="cart-book-image"></div>
-        <div class="cart-book-title">
-          A Very Long Book Title That Goes On and On As Though the Author Were
-          Very Impressed with Themself
-        </div>
-        <div class="cart-book-price">$43.50</div>
-        <div class="cart-book-quantity">
-          <input type="number" value="12" min="0" max="20" />
-        </div>
-        <div class="cart-book-subtotal">$522.00</div>
-      </li>
-      <li class="line-sep"></li>
-      <li>
-        <div class="cart-book-image"></div>
-        <div class="cart-book-title">Book Title</div>
-        <div class="cart-book-price">$2.99</div>
-        <div class="cart-book-quantity">
-          <select id="quantity">
-            <option value="0">Qty: 0</option>
-            <option value="1">Qty: 1</option>
-            <option value="2">Qty: 2</option>
-            <option value="3">Qty: 3</option>
-            <option value="4">Qty: 4</option>
-            <option value="5">Qty: 5</option>
-            <option value="6">Qty: 6</option>
-            <option value="7">Qty: 7</option>
-            <option value="8">Qty: 8</option>
-            <option value="9">Qty: 9</option>
-            <option value="10">Qty: 10</option>
-          </select>
-        </div>
-        <div class="cart-book-subtotal">$3.98</div>
-      </li>
     </ul>
   </div>
 </template>

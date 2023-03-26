@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import TheHeaderDropdown from "@/components/TheHeaderDropdown.vue";
-import { useCartStore } from "@/stores/CartStore";
+import { useCartStore } from "@/stores/cart.js";
 const cartStore = useCartStore();
 </script>
 
@@ -98,13 +98,10 @@ header a {
         <h1 class="logo-text">Rhine Books</h1>
       </a>
     </section>
+
     <section class="search-bar flex-centered-container">
       <form action="category.html" class="flex-centered-container">
-        <input
-          type="text"
-          class="search-bar-text"
-          placeholder="Search books..."
-        /><br />
+        <input type="text" class="search-bar-text" placeholder="Search books..." /><br />
         <input
           type="submit"
           class="button icon-inside-button search-bar-button"
@@ -114,11 +111,13 @@ header a {
     </section>
     <section class="header-dropdown-and-cart flex-centered-container">
       <the-header-dropdown></the-header-dropdown>
-      <button class="button icon-only-button">
-        <i class="fas fa-shopping-cart icon-only-button-icon">
-          <span class="icon-only-button-text">{{ cartStore.count }}</span>
-        </i>
-      </button>
+      <router-link to="/cart">
+        <button class="button icon-only-button">
+          <i class="fas fa-shopping-cart icon-only-button-icon">
+            <span class="icon-only-button-text">{{ cartStore.count }}</span>
+          </i>
+        </button>
+      </router-link>
       <button class="button" style="padding: 7px">GA</button>
     </section>
   </header>

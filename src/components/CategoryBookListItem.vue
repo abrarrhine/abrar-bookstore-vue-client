@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { defineProps } from "vue";
 import type { BookItem } from "@/types";
-import { useCartStore } from "@/stores/CartStore";
+import { useCartStore } from "@/stores/cart";
 const cartStore = useCartStore();
 
 const props = defineProps<{
