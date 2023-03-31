@@ -102,7 +102,7 @@ em {
       <h1>Your Cart</h1>
       <div class="lr-wrapper">
         <div class="left">
-          <router-link :to="'/category/Engineering'">
+          <router-link :to="'/category/' + cartStore.selectedCategoryName">
             <button class="continue-btn">
               <i class="fa-solid fa-arrow-left-long"></i> Continue Shopping
             </button>
@@ -142,7 +142,7 @@ em {
     <div v-else>
       <h1>Your Cart is Empty!</h1>
       <div class="center">
-        <router-link :to="'/category/Engineering'">
+        <router-link :to="'/category/' + cartStore.selectedCategoryName">
           <button class="continue-btn">
             <i class="fa-solid fa-arrow-left-long"></i> Continue Shopping
           </button>

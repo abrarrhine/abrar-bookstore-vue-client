@@ -7,6 +7,7 @@ const CART_STORAGE_KEY = "ShoppingCart";
 export const useCartStore = defineStore("CartStore", {
   state: () => {
     const initCart = new ShoppingCart();
+    const selectedCategoryName = "Science";
     const cartString = localStorage.getItem(CART_STORAGE_KEY);
     if (cartString !== null) {
       // cartString is a string
@@ -15,6 +16,7 @@ export const useCartStore = defineStore("CartStore", {
     }
     return {
       cart: initCart,
+      selectedCategoryName: selectedCategoryName,
     };
   },
   getters: {

@@ -13,5 +13,4 @@ export const useCategoryStore = defineStore("category", {
       this.categoryList = data as CategoryItem[];
     },
   },
-  // getters
 });
