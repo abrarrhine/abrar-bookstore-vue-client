@@ -93,7 +93,17 @@ const v$ = useVuelidate(rules, form);
 async function submitOrder() {
   console.log("Submit order");
   const isFormCorrect = await v$.value.$validate();
-  if (!isFormCorrect) return;
+  if (!isFormCorrect) {
+    form.checkoutStatus = "ERROR";
+  } else {
+    form.checkoutStatus = "PENDING";
+    setTimeout(() => {
+      form.checkoutStatus = "OK";
+      setTimeout(() => {
+        router.push({ name: "confirmation-view" });
+      }, 1000);
+    }, 1000);
+  }
 }
 
 /* NOTE: For example yearFrom(0) == <current_year> */
@@ -111,8 +121,14 @@ label {
   color: #000000;
 }
 .checkout-page-body {
-  display: flex;
-  padding: 1em;
+  display: block;
+  justify-content: center;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  margin-left: 40%;
+  margin-right: 40%;
+  padding-top: 5%;
+  padding-bottom: 5%;
 }
 
 form {
@@ -142,11 +158,22 @@ form > .error {
   padding: 1em;
   text-align: center;
 }
+
+.submit-btn {
+  max-width: fit-content !important;
+  min-width: fit-content !important;
+  align-self: end;
+}
 </style>
 
 <template>
   <div class="checkout-page">
     <!-- TODO: Add an HTML section to display when checking out with an empty cart -->
+    <section class="checkout-page-body" v-if="cart.empty">
+      <div>
+        <p>You have no items to checkout</p>
+      </div>
+    </section>
 
     <section class="checkout-page-body" v-if="!cart.empty">
       <form @submit.prevent="submitOrder">
@@ -212,18 +239,13 @@ form > .error {
         <CheckoutFieldError :field-name="v$.ccNumber"></CheckoutFieldError>
 
         <div>
-          <label>Exp Month</label>
-          <select v-model="v$.ccExpiryMonth">
+          <label>Exp Date:</label>
+          <select v-model="v$.ccExpiryMonth.$model">
             <option v-for="(month, index) in months" :key="index" :value="index + 1">
               {{ month }} ({{ index + 1 }})
             </option>
           </select>
-        </div>
-
-        <div>
-          <label>Exp Year</label>
           <select>
-            <!-- TODO: Complete this select tag for 'ccExpiryYear'. -->
             <option v-for="(year, index) in years" :key="index" :value="year">
               {{ year }}
             </option>
@@ -235,7 +257,7 @@ form > .error {
         <input
           type="submit"
           name="submit"
-          class="button"
+          class="button submit-btn"
           :disabled="form.checkoutStatus === 'PENDING'"
           value="Complete Purchase"
         />
@@ -246,13 +268,16 @@ form > .error {
       <!-- TODO (style): HINT: Use another <div> and label, input, and error, and use flexbox to style. -->
 
       <!-- TODO: Display the cart total, subtotal and surcharge. -->
-      <section class="checkout-details">
-        Your credit card will be charged
-        <strong>{{ asDollarsAndCents(cart.subtotal + cart.surcharge) }}</strong>
-        <br />
-        (<strong>{{ asDollarsAndCents(cart.subtotal) }}</strong> +
-        <strong>{{ asDollarsAndCents(cart.surcharge) }}</strong> shipping)
-      </section>
+      <div class="checkout-details">
+        <p>-----------------------------------------------</p>
+        <section>
+          Your credit card will be charged
+          <strong>{{ asDollarsAndCents(cart.subtotal + cart.surcharge) }}</strong>
+          <br />
+          (<strong>{{ asDollarsAndCents(cart.subtotal) }}</strong> +
+          <strong>{{ asDollarsAndCents(cart.surcharge) }}</strong> shipping)
+        </section>
+      </div>
 
       <section v-show="form.checkoutStatus !== ''" class="checkoutStatusBox">
         <div v-if="form.checkoutStatus === 'ERROR'">
@@ -261,7 +286,7 @@ form > .error {
 
         <div v-else-if="form.checkoutStatus === 'PENDING'">Processing...</div>
 
-        <div v-else-if="form.checkoutStatus === 'OK'">Order placed...</div>
+        <div v-else-if="form.checkoutStatus === 'OK'">Your order has been placed</div>
 
         <div v-else>An unexpected error occurred, please try again.</div>
       </section>
