@@ -22,6 +22,11 @@ const router = createRouter({
       component: CheckoutView,
     },
     {
+      path: "/checkout",
+      name: "confirmation-view",
+      component: CheckoutView,
+    },
+    {
       path: "/category/:name/",
       name: "category-view",
       component: CategoryView,

@@ -39,14 +39,8 @@ const form = reactive({
 const rules = {
   name: {
     required: helpers.withMessage("Please provide a name.", required),
-    minLength: helpers.withMessage(
-      "Name must have at least 4 letters.",
-      minLength(4)
-    ),
-    maxLength: helpers.withMessage(
-      "Name can have at most 45 letters.",
-      maxLength(45)
-    ),
+    minLength: helpers.withMessage("Name must have at least 4 letters.", minLength(4)),
+    maxLength: helpers.withMessage("Name can have at most 45 letters.", maxLength(45)),
   },
   //   TODO: Add more validations for these and other fields that need more validation.
 };
@@ -65,10 +59,12 @@ function yearFrom(index: number) {
 </script>
 
 <style scoped>
-/* TODO: Adapt these styles to your page */
+label {
+  font-weight: bold;
+}
 .checkout-page {
-  background: rgba(105, 100, 100, 0.5);
-  color: #7aed32;
+  background: rgba(255, 255, 255);
+  color: #000000;
 }
 .checkout-page-body {
   display: flex;
@@ -88,7 +84,7 @@ form > div {
 
 form > div > input,
 form > div > select {
-  background-color: #666666;
+  background-color: #ffffff;
   margin-left: 0.5em;
 }
 
@@ -121,24 +117,15 @@ form > .error {
           />
         </div>
         <template v-if="v$.name.$error">
-          <span
-            class="error"
-            v-for="error of v$.name.$errors"
-            :key="error.$uid"
-          >{{ error.$message }}</span
-          >
+          <span class="error" v-for="error of v$.name.$errors" :key="error.$uid">{{
+            error.$message
+          }}</span>
         </template>
         <!-- TODO: Add address input and validation messages -->
 
         <div>
           <label for="phone">Phone</label>
-          <input
-            class="textField"
-            type="text"
-            size="20"
-            id="phone"
-            name="phone"
-          />
+          <input class="textField" type="text" size="20" id="phone" name="phone" />
         </div>
         <!-- TODO: Add phone validation message(s) -->
 
@@ -157,11 +144,7 @@ form > .error {
         <div>
           <label>Exp Month</label>
           <select v-model="v$.ccExpiryMonth">
-            <option
-              v-for="(month, index) in months"
-              :key="index"
-              :value="index + 1"
-            >
+            <option v-for="(month, index) in months" :key="index" :value="index + 1">
               {{ month }} ({{ index + 1 }})
             </option>
           </select>

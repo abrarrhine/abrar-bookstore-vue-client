@@ -103,16 +103,12 @@ em {
       <div class="lr-wrapper">
         <div class="left">
           <router-link :to="'/category/' + cartStore.selectedCategoryName">
-            <button class="continue-btn">
-              <i class="fa-solid fa-arrow-left-long"></i> Continue Shopping
-            </button>
+            <input type="submit" name="submit" class="button" value="Continue Shopping" />
           </router-link>
         </div>
         <div class="right">
           <router-link to="/checkout">
-            <button class="checkout-btn">
-              Checkout <i class="fa-solid fa-arrow-right-long"></i>
-            </button>
+            <input type="submit" name="submit" class="button" value="Checkout" />
           </router-link>
         </div>
       </div>
@@ -133,9 +129,13 @@ em {
       <div class="cart-info">
         <p class="left">Item(s): {{ cartStore.count }}</p>
         <div class="right">
-          <button class="continue-btn" @click="cartStore.clearCart()">
-            Clear Cart <i class="fa-solid fa-trash"></i>
-          </button>
+          <input
+            type="submit"
+            name="submit"
+            class="button"
+            value="Clear Cart"
+            @click="cartStore.clearCart()"
+          />
         </div>
       </div>
     </div>
@@ -143,9 +143,7 @@ em {
       <h1>Your Cart is Empty!</h1>
       <div class="center">
         <router-link :to="'/category/' + cartStore.selectedCategoryName">
-          <button class="continue-btn">
-            <i class="fa-solid fa-arrow-left-long"></i> Continue Shopping
-          </button>
+          <input type="submit" name="submit" class="button" value="Continue Shopping" />
         </router-link>
       </div>
     </div>
