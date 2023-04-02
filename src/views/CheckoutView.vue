@@ -1,11 +1,12 @@
 <script setup lang="ts">
 import { reactive } from "vue";
 import useVuelidate from "@vuelidate/core";
-import { helpers, maxLength, minLength, required } from "@vuelidate/validators";
+import { email, helpers, maxLength, minLength, required } from "@vuelidate/validators";
 import { useCartStore } from "@/stores/cart";
-// import { isCreditCard, isMobilePhone } from "@/utils";
-// import CheckoutFieldError from "@/components/CheckoutFieldError.vue";
-// import router from "@/router";
+import { isCreditCard, isMobilePhone } from "@/validators";
+import CheckoutFieldError from "@/components/CheckoutFieldError.vue";
+import router from "@/router";
+import { asDollarsAndCents } from "@/main";
 
 const cartStore = useCartStore();
 const cart = cartStore.cart;
@@ -25,6 +26,19 @@ const months: string[] = [
   "December",
 ];
 
+function generateYears() {
+  // Get current year
+  const today = new Date();
+  const currentYear = today.getFullYear();
+  const years = [currentYear];
+  // Get next 15 years
+  for (let i = 1; i <= 15; i++) {
+    years.push(currentYear + i);
+  }
+  return years;
+}
+const years: number[] = generateYears();
+
 const form = reactive({
   name: "",
   address: "",
@@ -42,7 +56,37 @@ const rules = {
     minLength: helpers.withMessage("Name must have at least 4 letters.", minLength(4)),
     maxLength: helpers.withMessage("Name can have at most 45 letters.", maxLength(45)),
   },
-  //   TODO: Add more validations for these and other fields that need more validation.
+  address: {
+    required: helpers.withMessage("Please provide an address.", required),
+    minLength: helpers.withMessage(
+      "Address must have at least 4 characters.",
+      minLength(4)
+    ),
+    maxLength: helpers.withMessage(
+      "Address can have at most 45 characters.",
+      maxLength(45)
+    ),
+  },
+  email: {
+    required: helpers.withMessage("Please provide a valid email address.", required),
+    email: email,
+  },
+  phone: {
+    required: helpers.withMessage("Please provide a phone number.", required),
+    phone: helpers.withMessage(
+      "Please provide a valid phone number.",
+      (value: string) => !helpers.req(value) || isMobilePhone(value)
+    ),
+  },
+  ccNumber: {
+    required: helpers.withMessage("Please provide a credit card number.", required),
+    ccNumber: helpers.withMessage(
+      "Please provide a valid credit card number.",
+      (value: string) => !helpers.req(value) || isCreditCard(value)
+    ),
+  },
+  ccExpiryMonth: {},
+  ccExpiryYear: {},
 };
 const v$ = useVuelidate(rules, form);
 
@@ -107,7 +151,7 @@ form > .error {
     <section class="checkout-page-body" v-if="!cart.empty">
       <form @submit.prevent="submitOrder">
         <div>
-          <label for="name">Name</label>
+          <label for="name">Name:</label>
           <input
             type="text"
             size="20"
@@ -116,30 +160,56 @@ form > .error {
             v-model.lazy="v$.name.$model"
           />
         </div>
-        <template v-if="v$.name.$error">
-          <span class="error" v-for="error of v$.name.$errors" :key="error.$uid">{{
-            error.$message
-          }}</span>
-        </template>
+        <CheckoutFieldError :field-name="v$.name"></CheckoutFieldError>
         <!-- TODO: Add address input and validation messages -->
+        <div>
+          <label for="name">Address:</label>
+          <input
+            type="text"
+            size="20"
+            id="address"
+            name="address"
+            v-model.lazy="v$.address.$model"
+          />
+        </div>
+        <CheckoutFieldError :field-name="v$.address"></CheckoutFieldError>
 
         <div>
-          <label for="phone">Phone</label>
-          <input class="textField" type="text" size="20" id="phone" name="phone" />
+          <label for="phone">Phone:</label>
+          <input
+            type="text"
+            size="20"
+            id="phone"
+            name="phone"
+            v-model.lazy="v$.phone.$model"
+          />
         </div>
         <!-- TODO: Add phone validation message(s) -->
-
+        <CheckoutFieldError :field-name="v$.phone"></CheckoutFieldError>
         <div>
-          <label for="email">Email</label>
-          <input type="text" size="20" id="email" name="email" />
+          <label for="email">Email:</label>
+          <input
+            type="text"
+            size="20"
+            id="email"
+            name="email"
+            v-model.lazy="v$.email.$model"
+          />
         </div>
         <!-- TODO: Add email validation message(s) -->
-
+        <CheckoutFieldError :field-name="v$.email"></CheckoutFieldError>
         <div>
-          <label for="ccNumber">Credit card</label>
-          <input type="text" size="20" id="ccNumber" name="ccNumber" />
+          <label for="ccNumber">Credit card:</label>
+          <input
+            type="text"
+            size="20"
+            id="ccNumber"
+            name="ccNumber"
+            v-model.lazy="v$.ccNumber.$model"
+          />
         </div>
         <!-- TODO: Add credit card validation message(s) -->
+        <CheckoutFieldError :field-name="v$.ccNumber"></CheckoutFieldError>
 
         <div>
           <label>Exp Month</label>
@@ -154,6 +224,9 @@ form > .error {
           <label>Exp Year</label>
           <select>
             <!-- TODO: Complete this select tag for 'ccExpiryYear'. -->
+            <option v-for="(year, index) in years" :key="index" :value="year">
+              {{ year }}
+            </option>
           </select>
         </div>
         <!-- TODO (style): Use a single label for both month and date and put the on the same line. -->
@@ -173,6 +246,13 @@ form > .error {
       <!-- TODO (style): HINT: Use another <div> and label, input, and error, and use flexbox to style. -->
 
       <!-- TODO: Display the cart total, subtotal and surcharge. -->
+      <section class="checkout-details">
+        Your credit card will be charged
+        <strong>{{ asDollarsAndCents(cart.subtotal + cart.surcharge) }}</strong>
+        <br />
+        (<strong>{{ asDollarsAndCents(cart.subtotal) }}</strong> +
+        <strong>{{ asDollarsAndCents(cart.surcharge) }}</strong> shipping)
+      </section>
 
       <section v-show="form.checkoutStatus !== ''" class="checkoutStatusBox">
         <div v-if="form.checkoutStatus === 'ERROR'">
