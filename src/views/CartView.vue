@@ -41,44 +41,7 @@ h1 {
   align-items: flex-end;
   margin-bottom: 0.5em;
 }
-.continue-btn {
-  width: auto;
-  height: 2.25rem;
-  text-align: center;
-  font-size: small;
-  font-weight: lighter;
-  border: thin solid #000000;
-  border-radius: 0.5rem;
-  color: white;
-  background-color: var(--primary-color);
-  cursor: pointer;
-  box-shadow: 0px 5px 5px 0px rgba(0, 0, 0, 0.25);
-}
-.checkout-btn {
-  width: auto;
-  height: 2.25rem;
-  text-align: center;
-  font-size: small;
-  font-weight: lighter;
-  border: none;
-  border-radius: 0.5rem;
-  color: white;
-  background-color: var(--primary-color);
-  cursor: pointer;
-  box-shadow: 0px 5px 5px 0px rgba(0, 0, 0, 0.25);
-}
-.continue-btn:hover,
-.continue-btn:active {
-  background-color: var(--primary-color-dark);
-  color: #f9f9f3;
-  border: none;
-}
-.checkout-btn:hover,
-.checkout-btn:active {
-  background-color: var(--primary-color-dark);
-  color: #f9f9f3;
-  border: none;
-}
+
 .align-right {
   width: 47%;
   margin: 0 auto;
