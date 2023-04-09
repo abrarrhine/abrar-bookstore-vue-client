@@ -1,15 +1,27 @@
 <script setup lang="ts">
-import { reactive } from "vue";
+import { reactive, ref } from "vue";
 import useVuelidate from "@vuelidate/core";
-import { email, helpers, maxLength, minLength, required } from "@vuelidate/validators";
+import {
+  email,
+  helpers,
+  maxLength,
+  minLength,
+  required,
+} from "@vuelidate/validators";
 import { useCartStore } from "@/stores/cart";
 import { isCreditCard, isMobilePhone } from "@/validators";
 import CheckoutFieldError from "@/components/CheckoutFieldError.vue";
 import router from "@/router";
 import { asDollarsAndCents } from "@/main";
+import type { OrderDetails, ServerErrorResponse } from "@/types";
+import { useCategoryStore } from "@/stores/category";
 
 const cartStore = useCartStore();
+const categoryStore = useCategoryStore();
 const cart = cartStore.cart;
+const defaultServerErrorMessage =
+  "An unexpected error occurred, please try again.";
+const serverErrorMessage = ref(defaultServerErrorMessage);
 
 const months: string[] = [
   "January",
@@ -96,13 +108,34 @@ async function submitOrder() {
   if (!isFormCorrect) {
     form.checkoutStatus = "ERROR";
   } else {
-    form.checkoutStatus = "PENDING";
-    setTimeout(() => {
-      form.checkoutStatus = "OK";
-      setTimeout(() => {
-        router.push({ name: "confirmation-view" });
-      }, 1000);
-    }, 1000);
+    try {
+      form.checkoutStatus = "PENDING";
+      serverErrorMessage.value = defaultServerErrorMessage;
+
+      const placeOrderResponse: OrderDetails | ServerErrorResponse =
+        await cartStore.placeOrder({
+          name: form.name,
+          address: form.address,
+          phone: form.phone,
+          email: form.email,
+          ccNumber: form.ccNumber,
+          ccExpiryMonth: form.ccExpiryMonth,
+          ccExpiryYear: form.ccExpiryYear,
+      });
+
+      if ("error" in placeOrderResponse) {
+        form.checkoutStatus = "SERVER_ERROR";
+        serverErrorMessage.value = placeOrderResponse.message;
+        console.log("Error placing order", placeOrderResponse);
+      } else {
+        form.checkoutStatus = "OK";
+        await router.push({ name: "confirmation-view" });
+      }
+    } catch (e) {
+      form.checkoutStatus = "SERVER_ERROR";
+      serverErrorMessage.value = defaultServerErrorMessage;
+      console.log("Error placing order", e);
+    }
   }
 }
 
