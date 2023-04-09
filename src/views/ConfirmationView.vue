@@ -8,6 +8,7 @@ const cartStore = useCartStore();
   justify-content: center;
   align-items: center;
   margin: 1em auto;
+  color: black !important;
 }
 .space-above {
   margin-top: 15%;
