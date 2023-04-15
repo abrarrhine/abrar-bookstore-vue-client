@@ -1,5 +1,5 @@
 {
-  "name": "abrar-bookstore-order-client",
+  "name": "abrar-bookstore-transact-client",
   "version": "0.0.0",
   "private": true,
   "scripts": {
