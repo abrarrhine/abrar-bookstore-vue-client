@@ -4,13 +4,16 @@ import TheCategoryBookList from "@/components/TheCategoryBookList.vue";
 import { useRoute } from "vue-router";
 import { useBookStore } from "@/stores/book";
 import { watch } from "vue";
+import router from "@/router";
 const route = useRoute();
 const bookStore = useBookStore();
 
 watch(
   () => route.params.name,
-  (newName) => {
-    bookStore.fetchBooks(newName as string);
+  (newName: any) => {
+    bookStore.fetchBooks(newName as string).catch(()=>{
+      router.push("/not-found"); 
+    })
   },
   { immediate: true }
 );

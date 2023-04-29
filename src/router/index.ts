@@ -4,6 +4,8 @@ import CartView from "@/views/CartView.vue";
 import CheckoutView from "@/views/CheckoutView.vue";
 import CategoryView from "@/views/CategoryView.vue";
 import ConfirmationView from "@/views/ConfirmationView.vue";
+import NotFound from "@/views/NotFound.vue";
+
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -11,11 +13,16 @@ const router = createRouter({
       path: "/",
       name: "home",
       component: HomeView,
+      alias: ["/", "/index.html"],
     },
     {
       path: "/cart",
       name: "cart-view",
       component: CartView,
+    },
+    {
+      path: "/category",
+      redirect: "/category/Science",
     },
     {
       path: "/checkout",
@@ -32,6 +39,11 @@ const router = createRouter({
       name: "category-view",
       component: CategoryView,
     },
+    {
+      path: "/:pathMatch(.*)*",
+      name: "not-found",
+      component: NotFound, 
+    }
   ],
 });
 
