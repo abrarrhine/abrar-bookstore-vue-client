@@ -37,8 +37,7 @@
     <section class="welcome-text flow-content container">
       <h2>Rhine Books</h2>
       <p>Explore the empire of knowledge!!!</p>
-      <button class="button shop-button">Sign Up</button>
-      <button class="button shop-button">Shop Books</button>
+      <button class="button shop-button">Explore Books</button>
     </section>
   </div>
 </template>
