@@ -37,7 +37,9 @@
     <section class="welcome-text flow-content container">
       <h2>Rhine Books</h2>
       <p>Explore the empire of knowledge!!!</p>
-      <button class="button shop-button">Explore Books</button>
+      <router-link :to="'/category/Science'">
+        <button class="button shop-button">Explore Books</button>
+      </router-link>
     </section>
   </div>
 </template>
