@@ -321,7 +321,7 @@ form > .error {
 
         <div v-else-if="form.checkoutStatus === 'OK'">Your order has been placed</div>
 
-        <div v-else>An unexpected error occurred, please try again.</div>
+        <div v-else>{{ serverErrorMessage }}</div>
       </section>
     </section>
   </div>
