@@ -129,11 +129,11 @@ img {
 
 .dec-button {
   font-size: 1.125rem;
-  color: #ccc;
+  color: #eb1212;
 }
 
 .dec-button:hover {
-  color: #aaa;
+  color: #be2020;
 }
 
 /* Chevron buttons */
