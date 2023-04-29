@@ -1,5 +1,6 @@
 import { defineStore } from "pinia";
 import { ShoppingCart } from "@/types";
+import { useOrderDetailsStore } from "./OrderDetailsStore";
 import type {
   BookItem,
   CustomerForm,
@@ -54,6 +55,8 @@ export const useCartStore = defineStore("CartStore", {
     async placeOrder(
       customerForm: CustomerForm
     ): Promise<OrderDetails | ServerErrorResponse> {
+      const orderDetailsStore = useOrderDetailsStore(); 
+      orderDetailsStore.clearOrderDetails(); 
       const order = { cart: this.cart, customerForm: customerForm };
       console.log(JSON.stringify(order));
 
@@ -75,6 +78,7 @@ export const useCartStore = defineStore("CartStore", {
 
       if (response.ok) {
         this.clearCart();
+        orderDetailsStore.setOrderDetails(placeOrderResponse as OrderDetails);
       }
       return placeOrderResponse;
     },
