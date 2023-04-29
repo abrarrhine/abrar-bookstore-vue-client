@@ -319,7 +319,7 @@ form > .error {
 
         <div v-else-if="form.checkoutStatus === 'PENDING'">Processing...</div>
 
-        <div v-else-if="form.checkoutStatus === 'OK'">Your order has been placed</div>
+        <div v-else-if="form.checkoutStatus === 'OK'">Your order has been placed!!</div>
 
         <div v-else>{{ serverErrorMessage }}</div>
       </section>
